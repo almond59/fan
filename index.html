@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>💘 วันครบรอบของเรา 💘</title>
+  <style>
+    body {
+      font-family: "Kanit", sans-serif;
+      background: linear-gradient(to bottom, #ffe6f0, #ffffff);
+      color: #d6336c;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    .heart {
+      font-size: 2em;
+      animation: beat 1s infinite;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    #anniversary {
+      font-size: 1.5em;
+      margin: 20px 0;
+    }
+
+    /* slideshow */
+    .slideshow {
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    .slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    /* love note */
+    .love-note {
+      margin-top: 30px;
+    }
+
+    textarea {
+      width: 80%;
+      height: 80px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-top: 10px;
+      background-color: #ff6699;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e05588;
+    }
+
+    .message {
+      font-size: 1.3em;
+      color: #ff3399;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 สุขสันต์วันครบรอบ 💖</h1>
+  <p id="anniversary">เราคบกันมาแล้ว...</p>
+  <p class="heart">💗💗💗</p>
+
+  <!-- สไลด์โชว์รูปคู่ -->
+  <div class="slideshow">
+    <img src="img/แฟน.jpg.jpg" alt="fan">
+    <img src="img/แฟน0.jpg.jpg" alt="fan">
+    <img src="img/แฟนสุดสวย.jpg.jpg" alt="fan">
+  </div>
+
+  <!-- เขียนข้อความถึงแฟน -->
+  <div class="love-note">
+    <h3>💌 เขียนข้อความถึงแฟน 💌</h3>
+    <textarea id="loveInput" placeholder="พิมพ์ข้อความหวาน ๆ ที่นี่..."></textarea><br>
+    <button onclick="showMessage()">ส่งข้อความ</button>
+    <div class="message" id="loveMessage"></div>
+  </div>
+
+  <!-- เพลงรักเบา ๆ -->
+  <audio id="loveSong" autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+    เพลงไม่รองรับบนเบราว์เซอร์นี้
+  </audio>
+
+  <script>
+    // 🗓 คำนวณวันครบรอบ
+    const startDate = new Date(2024, 4, 7); // 7 พ.ค. 2024 (เดือนเริ่มที่ 0)
+    const today = new Date();
+    const diffTime = today - startDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const years = Math.floor(diffDays / 365);
+    const months = Math.floor((diffDays % 365) / 30);
+    const days = (diffDays % 365) % 30;
+
+    document.getElementById("anniversary").innerText = 
+      `เราคบกันมาแล้ว ${years} ปี ${months} เดือน ${days} วัน 🥰 (รวม ${diffDays} วัน)`;
+
+    // 🎞 สไลด์โชว์รูป
+    const images = document.querySelectorAll(".slideshow img");
+    let current = 0;
+    setInterval(() => {
+      images[current].style.display = "none";
+      current = (current + 1) % images.length;
+      images[current].style.display = "block";
+    }, 3000);
+
+    // 💌 แสดงข้อความที่พิมพ์
+    function showMessage() {
+      const text = document.getElementById("loveInput").value;
+      const output = document.getElementById("loveMessage");
+      if (text.trim()) {
+        output.innerText = `💌 "${text}" 💌`;
+      } else {
+        output.innerText = "";
+      }
+    }
+
+    // 🔈 เริ่มเล่นเพลง (บางเบราว์เซอร์ต้องให้ user แตะหน้าจอก่อน)
+    const loveSong = document.getElementById("loveSong");
+    document.body.addEventListener("click", () => {
+      loveSong.play().catch(() => {});
+    }, { once: true });
+  </script>
+</body>
+</html>
